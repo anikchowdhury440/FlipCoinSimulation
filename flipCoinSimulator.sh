@@ -7,7 +7,7 @@ function getCoinFlipResult() {
         echo $(( RANDOM%2 ))
 }
 
-for (( i=0;i<10;i++ ))
+while [[ $count_head -lt 21 && $count_tail -lt 21 ]]
 do
         coin_flip_result="$( getCoinFlipResult )"
 	if [[ $coin_flip_result -eq 0 ]]
@@ -18,5 +18,17 @@ do
 	fi
 done
 
-echo "Number of times Head won: " $count_head
-echo "Number of times Tail won: " $count_tail
+if [ $count_head -ne $count_tail ]
+then
+        echo "It's a win"
+        if [ $count_head -gt $count_tail ]
+        then
+                difference=$(( $count_head-$count_tail ))
+                echo "Head Wins! Head wins $difference times more than Tail"
+        else
+                difference=$(( $count_tail-$count_head ))
+                echo "Tail Wins! Tail Wins $difference times more than Head"
+        fi
+else
+        echo "It's a tie"
+fi
